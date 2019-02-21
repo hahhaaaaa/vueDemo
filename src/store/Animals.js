@@ -24,9 +24,9 @@ export default {//创建仓库
     getters:{
     },
     actions: { //连接后台接口backend api
-        addpetsAsync:async ({commit},payload)=>{
-            const {data}=await addpetsAsync(payload);
-            commit('getSerByPage',data);
+        addpetsAsync:async ({dispatch},payload)=>{
+           await addpetsAsync(payload);
+            dispatch("getpetsAsnync")
         },
         getpetsAsnync:async ({commit,state})=>{
             const {data}=await getpetsAsync({
