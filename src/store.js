@@ -5,6 +5,7 @@ import user from './store/user'
 import permission from './store/permission'
 import shop from './store/shop'
 import Animals from './store/Animals'
+import commodity from './store/commodity'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -46,6 +47,7 @@ export default new Vuex.Store({
     layout,
     permission,
     shop,
-    Animals
+    Animals,
+    commodity
   }
 })
