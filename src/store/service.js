@@ -1,4 +1,4 @@
-import {addpetsAsync,getpetsAsync,getdeleteAsync,revisePetsAsync}from '../service/pets';
+import {getSerByPageAsync,upDateServiceAsnync,addServiceAsync,delOneSerAsync} from '../service/service';
 export default {//创建仓库
     namespaced:true,
     state: {
@@ -24,26 +24,38 @@ export default {//创建仓库
     getters:{
     },
     actions: { //连接后台接口backend api
-        addpetsAsync:async ({dispatch},payload)=>{
-           await addpetsAsync(payload);
-            dispatch("getpetsAsnync")
-        },
-        getpetsAsnync:async ({commit,state})=>{
-            const {data}=await getpetsAsync({
+        getSerByPageAsync:async ({commit,state})=>{
+           const{data} =await getSerByPageAsync({
                 currentPage:state.currentPage,
                 eachPage:state.eachPage
             });
+           commit('getSerByPage',data)
+        },
+        // setCurPageTrans:async({commit,dispatch},payload)=>{
+        //     commit('setCurPage',payload);
+        //     dispatch('getStuByPageAsync');
+        // }
+
+        upDateServiceAsnync:async ({commit},payload)=>{
+            const {data}=await upDateServiceAsnync(payload);
             commit('getSerByPage',data)
+            if(data){
+                payload[3].cb("ok")
+            }
         },
-        getdeleteAsync:async ({commit,dispatch},payload)=>{
-            const {data}=await getdeleteAsync(payload);
+        addServiceAsync:async ({commit},payload)=>{
+            const {data}=await addServiceAsync(payload);
             commit('getSerByPage',data);
-            dispatch("getpetsAsnync")
+            if(data){
+                payload[5].cb("ok")
+            }
         },
-        revisePetsAsync:async ({commit,dispatch},payload)=>{
-            const {data}=await revisePetsAsync(payload);
-            // commit('getSerByPage',data);
-            dispatch("getpetsAsnync")
-        },
+        delOneSer:async({commit},payload)=>{
+            const {data}=await delOneSerAsync(payload);
+            commit('getSerByPage',data)
+            if(data){
+                payload[4].cb("ok")
+            }
+        }
     }
 }

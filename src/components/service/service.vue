@@ -1,8 +1,8 @@
 <template>
   <div>
       <!-- 轮播 -->
-    <div class="el-dialog__wrapper" id="photoBlock" style="display: none">
-    <img @click='closeCarousel' src="https://p0.meituan.net/education/1bcf4b282ab1721887398c164c76f65a385.png" alt="删除按钮" style="position: relative;right: -400px;top: 100px;">
+    <div class="photoBlock" id="photoBlock" style="display: none">
+    <img @click='closeCarousel' src="https://p0.meituan.net/education/1bcf4b282ab1721887398c164c76f65a385.png" alt="删除按钮" style="position: relative;right: -300px;top: 50px;">
        
       <el-carousel height="280px" >
         <el-carousel-item >
@@ -52,7 +52,7 @@
       </el-table-column>
       <el-table-column prop="species" label="服务种类" width="100" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="plan" label="时间段" width="100" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="weight" label="宠物的大小" width="80"></el-table-column>
+      <el-table-column prop="weight" label="宠物的大小" width="60"></el-table-column>
       <el-table-column prop="service" label="服务规格：普修，精修" width="60"></el-table-column>
       <el-table-column prop="time" label="耗时：正常耗时" width="100"></el-table-column>
       <el-table-column prop="waiter" label="服务员等级：普通，高级" width="60"></el-table-column>
@@ -142,11 +142,11 @@
         dialogFormVisible: false,
         form: {
           name: "", //服务类别
-          img: "https://p1.meituan.net/dpdeal/761f1769fdc11d2fd906200062c374e4164109.jpg%40450w_280h_1e_1c_1l%7Cwatermark%3D0", //图片路径
+          img: "", //图片路径
           photoWall1: "https://p1.meituan.net/dpdeal/9fb2aaadf8bf005361b73c85573e479a144425.jpg%40450w_280h_1e_1c_1l%7Cwatermark%3D0", //相册
-          photoWall2: "https://p0.meituan.net/dpdeal/0727a48174e61b6d12800bcef78f51a0405130.jpg%40450w_280h_1e_1c_1l%7Cwatermark%3D0", //相册
-          photoWall3: "https://p1.meituan.net/dpdeal/b55c9a45f38903481abc69a2a2454ac0234731.jpg%40450w_280h_1e_1c_1l%7Cwatermark%3D0", //相册
-          photoWall4: "https://p1.meituan.net/dpdeal/2a483d24a0ca5b10816acfc1c0c19d611057600.jpg%40450w_280h_1e_1c_1l%7Cwatermark%3D0", //相册
+          photoWall2: "https://p1.meituan.net/dpdeal/9fb2aaadf8bf005361b73c85573e479a144425.jpg%40450w_280h_1e_1c_1l%7Cwatermark%3D0", //相册
+          photoWall3: "https://p1.meituan.net/dpdeal/9fb2aaadf8bf005361b73c85573e479a144425.jpg%40450w_280h_1e_1c_1l%7Cwatermark%3D0", //相册
+          photoWall4: "https://p1.meituan.net/dpdeal/9fb2aaadf8bf005361b73c85573e479a144425.jpg%40450w_280h_1e_1c_1l%7Cwatermark%3D0", //相册
           species: "", //品类：服务类别（关联定义）
           plan: "", //排期：按时间段
           weight: "", //适用规格：按体重范围等；
@@ -165,8 +165,9 @@
       //渲染完成后自动调用该函数
       this.getSerByPageAsync();
     },
-    computed: { //拿state
-     ...mapState(["currentPage", "eachPage", "count", "rows", "totalPage"])
+    computed: {
+      //拿state
+      ...mapState(["currentPage", "eachPage", "count", "rows", "totalPage"])
     },
     methods: {
       //拿同步异步方法 在这儿写函数
