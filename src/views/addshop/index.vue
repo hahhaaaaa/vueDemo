@@ -158,6 +158,7 @@ export default {
         storeFeature:['标签一','标签二','标签三'],
         storeImgs:[],
         storePosition:[],
+        userID:''
       },
 
      //  星级评分
@@ -338,8 +339,11 @@ export default {
     },
     // getQiniuToken() {},
     submitForm(formData) {
-      console.log(formData)
-     this.storeAdd(formData);
+      formData.userID= JSON.parse(localStorage.getItem("user"))[0]._id,
+      this.storeAdd(formData).then(({ data }) => {
+        console.log(data);
+        this.$router.push("/example/tree");
+      });
     },
     ...mapActions(["getPhoto", "getToken", "storeAdd"]),
     //商铺特色

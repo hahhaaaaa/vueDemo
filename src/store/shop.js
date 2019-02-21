@@ -22,7 +22,8 @@ export default {
         getShopsBypage: async ({ commit, state }, { name, value } = {}) => {
             name = name || ''
             value = value || ''
-            let { data } = await getShopsBypage({ start: state.start, count: state.count, name, value });
+            let userID=JSON.parse(localStorage.getItem('user'))[0]._id
+            let { data } = await getShopsBypage({ start: state.start, count: state.count, name, value,userID });
             commit("getShopList", data);
         },
         queryLoading: async ({ commit, state }, queryString) => {

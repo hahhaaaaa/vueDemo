@@ -46,10 +46,8 @@
                 <img title="营业执照" :src='scope.row.storeImg' width="50px" height="50px">
               </span>
             </el-form-item>
-            <el-form-item label="门店图片">
-              <template v-for="item in storeImgs" >
-                  <img title="门店图片" :src='item' width="75px" height="75px" :key="item">
-              </template>
+            <el-form-item label="评分">
+              <span>{{scope.row.storeVip}}</span>
             
             </el-form-item>
           </el-form>
@@ -57,7 +55,13 @@
       </el-table-column>
       <el-table-column label="店铺名称" prop="storeTitle"></el-table-column>
       <el-table-column label="店铺地址" prop="storeAddress"></el-table-column>
-      <el-table-column label="店铺介绍" prop="description"></el-table-column>
+      <el-table-column label="店铺介绍" prop="storeFeature"></el-table-column>
+      <el-table-column label="店铺图片" prop="storeImgs">
+      <template slot-scope="scope">
+        <img :src="scope.row.storeImgs" width="75px" height="75px">
+      </template>
+      </el-table-column>
+      <el-table-column label="店铺ID" prop="_id"></el-table-column>
       <el-table-column label="操作" width="400">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
