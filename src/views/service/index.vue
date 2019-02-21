@@ -30,12 +30,12 @@
     <el-table :data="rows" >
       <el-table-column :show-overflow-tooltip="true" prop="name" label="服务名称" width="100"></el-table-column>
       <el-table-column  label="封面照片">
-        <template scope="scope" prop="img">
+        <template slot-scope="scope" prop="img">
           <img :src="scope.row.img" width="80" height="80" class="head_pic">
         </template>
       </el-table-column>
       <el-table-column label="相片集">
-        <template scope="scope" prop="photoWall1">
+        <template slot-scope="scope" prop="photoWall1">
 
           <div style="position: relative;">
             <div style="position: absolute;
@@ -83,7 +83,7 @@
         <el-form-item label="封面照片：" :label-width="formLabelWidth">
           <el-input v-model="form.img" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="照片集：" :label-width="formLabelWidth">
+        <el-form-item label="照片集：" :label-width="formLabelWidth" cell-mouse-enter="photosEn">
           <el-input v-model="form.photoWall1" placeholder="照片1" autocomplete="off"></el-input>
           <el-input v-model="form.photoWall2" placeholder="照片2" autocomplete="off"></el-input>
           <el-input v-model="form.photoWall3" placeholder="照片3" autocomplete="off"></el-input>
@@ -170,6 +170,10 @@
     },
     methods: {
       //拿同步异步方法 在这儿写函数
+      photosEn(){
+          console.log(this);
+          
+      },
       handleIsShelveType(row){//修改上架状态
         this.upDateServiceAsnync([row, {
             currentPage: this.currentPage
