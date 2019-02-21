@@ -1,0 +1,42 @@
+{
+  "name": "my-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "echarts": "^4.1.0",
+    "element-ui": "^2.5.4",
+    "install": "^0.12.2",
+    "js-cookie": "^2.2.0",
+    "moment": "^2.24.0",
+    "npm": "^6.8.0",
+    "nprogress": "^0.2.0",
+    "vue": "^2.5.22",
+    "vue-amap": "^0.5.8",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "axios": "^0.18.0",
+    "fibers": "^3.1.1",
+    "font-awesome": "^4.7.0",
+    "sass": "^1.16.0",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
