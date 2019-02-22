@@ -7,10 +7,14 @@
     class="demo-ruleForm"
     style="marginTop:30px; width:600px;"
   >
-    <el-form-item label="选择店铺" prop="shop">
-      <el-select v-model="ruleForm.shop" placeholder="请选择要添加的店铺">
-        <el-option label="区域一" value="shanghai"></el-option>
-        <el-option label="区域二" value="beijing"></el-option>
+    <el-form-item label="选择店铺" prop="store">
+      <el-select v-model="ruleForm.store" placeholder="请选择要添加的店铺">
+        <el-option
+          v-for="item in liebiao"
+          :key="item._id"
+          :label="item.storeTitle"
+          :value="item._id"
+        ></el-option>
       </el-select>
     </el-form-item>
 
@@ -62,7 +66,7 @@ export default {
   data() {
     return {
       ruleForm: {
-        shop: "",
+        store: "",
         category: [],
         categorys: "",
         date1: "",
@@ -70,7 +74,7 @@ export default {
         desc: ""
       },
       rules: {
-        shop: [
+        store: [
           { required: true, message: "请选择要添加的店铺", trigger: "change" }
         ],
         category: [
@@ -423,15 +427,29 @@ export default {
       ]
     };
   },
+  mounted() {
+    //渲染完成后自动调用该函数
+    const fm = JSON.parse(localStorage.user)[0]._id;
+    this.getSerByPage({userID: fm});
+    this.getfindPetAsync({ userID: fm });
+  },
   methods: {
+    shishi() {},
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
+          const fm = JSON.parse(localStorage.user);
+          this.addpetsAsync({
+            petstype: this.ruleForm.category[2].name,
+            haircolor: this.ruleForm.desc,
+            birthday: this.ruleForm.date1,
+            character: this.ruleForm.resource,
+            userID: fm[0]._id,
+            storeCityId: this.ruleForm.store
+          });
+          this.$refs[formName].resetFields();
           alert("成功!");
-          this.addpetsAsync({petstype:this.ruleForm.category[2].name,haircolor:this.ruleForm.desc,birthday:this.ruleForm.date1,character:this.ruleForm.resource})
-    this.$refs[formName].resetFields();
         } else {
-          console.log("失败");
           return false;
         }
       });
@@ -440,12 +458,14 @@ export default {
       this.$refs[formName].resetFields();
     },
     getSTime(val) {
-      console.log(val);
       this.date1 = val; //这个sTime是在data中声明的，也就是v-model绑定的值
     },
-    ...mapActions(["addpetsAsync"]),
-
+    ...mapActions(["addpetsAsync", "getfindPetAsync"]),
+    ...mapMutations(["getSerByPage"])
   },
- 
+  computed: {
+    //拿state
+    ...mapState(["liebiao"])
+  }
 };
 </script>

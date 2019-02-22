@@ -1,4 +1,4 @@
-import {addpetsAsync,getpetsAsync,getdeleteAsync,revisePetsAsync}from '../service/pets';
+import {addpetsAsync,getpetsAsync,getdeleteAsync,revisePetsAsync,getfindPetAsync}from '../service/pets';
 export default {//创建仓库
     namespaced:true,
     state: {
@@ -6,7 +6,9 @@ export default {//创建仓库
         eachPage:5,//每页显示条数
         totalPage:1,//总页数
         count:0,//总条数
-        rows:[]//数据
+        rows:[],//数据
+        liebiao:[],//店铺
+        userID:""
     },
     mutations: {//同步更新
         getSerByPage:(state,payload)=>{
@@ -28,11 +30,13 @@ export default {//创建仓库
            await addpetsAsync(payload);
             dispatch("getpetsAsnync")
         },
-        getpetsAsnync:async ({commit,state})=>{
+        getpetsAsnync:async ({commit,state},payload)=>{
             const {data}=await getpetsAsync({
                 currentPage:state.currentPage,
-                eachPage:state.eachPage
+                eachPage:state.eachPage,
+                userID:state.userID
             });
+            console.log(data)
             commit('getSerByPage',data)
         },
         getdeleteAsync:async ({commit,dispatch},payload)=>{
@@ -44,6 +48,10 @@ export default {//创建仓库
             const {data}=await revisePetsAsync(payload);
             // commit('getSerByPage',data);
             dispatch("getpetsAsnync")
+        },
+        getfindPetAsync:async ({commit,state},payload)=>{  
+            const {data}=await getfindPetAsync(payload);
+            commit('getSerByPage',data);
         },
     }
 }

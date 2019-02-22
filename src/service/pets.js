@@ -1,14 +1,17 @@
 import request from '../utils/request'
 
 
-export function getpetsAsync({currentPage=1,eachPage=5}={}){
-    return request(`pets/getPetsBypage?currentPage=${currentPage}&eachPage=${eachPage}`)
+export function getpetsAsync({currentPage=1,eachPage=5,userID}={}){
+    return request(`pets/getPetsBypage?currentPage=${currentPage}&eachPage=${eachPage}&userID=${userID}`)
 }
 
 export function getdeleteAsync(id){
   return request(`pets/getdelete?_id=${id}`)
 }
 
+export function getfindPetAsync({userID}){
+  return request(`store/findPet?userID=${userID}`)
+}
 
 export function addpetsAsync(data){
     return request('pets/addPets', {

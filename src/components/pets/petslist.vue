@@ -5,7 +5,7 @@
       :data="rows.filter(data => !search || data.petstype.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
     >
-      <el-table-column label="店铺" prop="name"></el-table-column>
+      <el-table-column label="店铺" prop="storeCityId.storeTitle"></el-table-column>
       <el-table-column label="出生年月" prop="birthday"></el-table-column>
       <el-table-column label="品种" prop="petstype"></el-table-column>
       <el-table-column label="性格" prop="character"></el-table-column>
@@ -116,11 +116,13 @@ export default {
   },
   mounted() {
     //渲染完成后自动调用该函数
-    this.getpetsAsnync();
+    const fm = JSON.parse(localStorage.user)[0]._id
+this.getSerByPage({userID: fm})
+    this.getpetsAsnync(fm);
   },
   methods: {
     ...mapActions(["getpetsAsnync","getdeleteAsync","revisePetsAsync"]),
-    ...mapMutations(["setCurPage", "setEachPage"]),
+    ...mapMutations(["setCurPage", "setEachPage","getSerByPage"]),
     handleEdit(index, row) {
       this.dialogTableVisible = true;
       this.ruleForm.resource=row.character;
@@ -136,11 +138,13 @@ export default {
     },
     handleSizeChange(val) {
       this.setEachPage(val);
-      this.getpetsAsnync();
+       const fm = JSON.parse(localStorage.user)[0]._id
+      this.getpetsAsnync(fm);
     },
     handleCurrentChange(val) {
       this.setCurPage(val);
-      this.getpetsAsnync();
+       const fm = JSON.parse(localStorage.user)[0]._id
+      this.getpetsAsnync(fm);
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
