@@ -164,6 +164,7 @@
     mounted() {
       //渲染完成后自动调用该函数
       this.getSerByPageAsync();
+  
     },
     computed: {
       //拿state

@@ -11,7 +11,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div>共100家</div>
+      <div>共{{count}}家</div>
       <div class="amap-page-container">
         <el-amap vid="amapDemo" :center="center" :zoom="zoom" class="amap-demo">
           <el-amap-marker
@@ -38,9 +38,11 @@ export default {
     
   data() {
     return {
-      zoom: 16,
-      center: [121.59996, 31.197646],
-      markers: [],
+      zoom: 14,
+      center:'',
+      // center:[104.283893, 30.521525],
+      center: [104.07 , 30.67],
+      markers: [],  
       windows: [],
       window: "",
       formSearch: {
@@ -50,24 +52,30 @@ export default {
   },
 
   mounted() {
+
     let markers = [];
     let windows = [];
-
-    let num = 10;
+    // getAddressAsync
+    // let num = 10;
     let self = this;
 //    在mounted中获取所有地址
-// 
-
-    for (let i = 0; i < num; i++) {
-      markers.push({
-        position: [121.59996, 31.197646 + i * 0.001],
+     
+     this.getAddressAsync(this.formSearch.keywords)
+  //  this.center=this.marker[0].storePosition;
+    console.log(this.markers)
+     for(let item of this.marker){
+       
+       //console.log(self.windows)
+       //console.log(item.storePosition,'123')
+          markers.push({
+        position:item.storePosition,
         events: {
           click() {
             self.windows.forEach(window => {
               window.visible = false;
             });
 
-            self.window = self.windows[i];
+            // self.window = self.windows[i];
             self.$nextTick(() => {
               self.window.visible = true;
             });
@@ -76,14 +84,49 @@ export default {
       });
 
       windows.push({
-        position: [121.59996, 31.197646 + i * 0.001],
-        content: `<div class="prompt">${i}</div>`,
+        position: [item.storePosition],
+        content: `<div class="prompt">${'123'}</div>`,
         visible: false
       });
-    }
+     }
+    // for (let i = 0; i < 10; i++) {
+    //   markers.push({
+    //     position: [104.283893 ,30.521525+ i * 0.01],
+    //     events: {
+    //       click() {
+    //         self.windows.forEach(window => {
+    //           window.visible = false;
+    //         });
+
+    //         self.window = self.windows[i];
+    //         self.$nextTick(() => {
+    //           self.window.visible = true;
+    //         });
+    //       }
+    //     }
+    //   });
+
+    //   windows.push({
+    //     position: [104.283893, 30.521525  + i * 0.01],
+    //     content: `<div class="prompt">${i}</div>`,
+    //     visible: false
+    //   });
+    // }
 
     this.markers = markers;
     this.windows = windows;
+  },
+  computed:{
+    ...mapState(['count','marker']),
+  },
+  methods:{
+    ...mapActions(['getAddressAsync']),
+    
+   serachHadler(){
+    this.getAddressAsync(this.formSearch.keywords);
+    this.center=this.marker[0].storePosition
+    //console.log(this.formSearch.keywords)
+   }
   }
 };
 </script>

@@ -1,6 +1,6 @@
 import {request,getData,getFormData} from './request';
-export  const   getShopsBypage=({start=1,count=10,name="",value=""}={})=> {
-  return  request(`/store/list?start=${start}&count=${count}&name=${name}&value=${value}`);
+export  const   getShopsBypage=({start=1,count=10,name="",value="",userID=''}={})=> {
+  return  request(`/store/list?start=${start}&count=${count}&name=${name}&value=${value}&userID=${userID}`);
 }
 export const getShopAddress=(queryString)=>{
   return request(`/store/getAddress?storeAddress=${queryString}`)
@@ -32,3 +32,15 @@ export const storeAdd=(data)=>{
 export const getAllmarkes=()=>{
  // return request('')
 }
+export const storeNoListAsync=({start=1,count=10,name="",value=""}={})=>{
+  return request(`/store/storeNoList?start=${start}&count=${count}`)
+}
+export const getAddressAsync=(data)=>{
+  return  getData('/store/storeAddress',data)
+}  
+export const IsUpdate=(data)=>{
+  return getData('/store/Isupdate',data)
+}
+// export const weather=()=>{
+//   return getFormData(`http://i.tianqi.com/index.php?c=code&id=1&icon=1&py=chengdu&wind=0&num=1&site=14`)
+// }

@@ -12,11 +12,12 @@
       <el-table-column prop="origin" label="产地"></el-table-column>
       <el-table-column prop="expiration" label="保质期"></el-table-column>
       <el-table-column prop="price" label="价格"></el-table-column>
-      <el-table-column prop="picture.url" label="图片">
+    
+    <el-table-column prop="picture.url" label="图片">
       <template slot-scope="scope">
       <img  :src="scope.row.picture.url" alt="" style="width: 50px;height: 50px">
        </template>
-      </el-table-column>
+      </el-table-column> 
       <el-table-column align="right">
         <template slot-scope="scope">
           <el-button size="mini" @click="updataCommodityData(scope.row)">更新</el-button>
@@ -73,8 +74,10 @@ export default {
     };
   },
   mounted() {
+    // console.log(this.data)
     const fm =JSON.parse(localStorage.user)
     this.id = fm[0]._id
+    console.log(fm)
     this.getCommodityByPageAsync(this.id);
   },
   watch: {

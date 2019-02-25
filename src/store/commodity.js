@@ -1,4 +1,5 @@
-import {addCommodity,getCommodity,removeCommodity,updataCommodity} from '../service/commodity'
+import {addCommodity,getCommodity,removeCommodity,updataCommodity,getkind} from '../service/commodity'
+import { async } from 'q';
 
 export default{
     namespaced:true,
@@ -42,6 +43,9 @@ export default{
       updataCommodityAsync:async ({dispatch},payload)=>{
         await updataCommodity(payload)
         dispatch('getCommodityByPageAsync')
+      },
+      getKindAsync:async({dispatch},payload)=>{
+         return await getkind();
       }
     }
 }

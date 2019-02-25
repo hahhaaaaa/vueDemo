@@ -43,3 +43,6 @@ export function updataCommodity(data) {
    }
    return request('/products/updataCommodity',uodatacommodity)
 }
+export function getkind(){
+   return request('/products/getkind')
+}

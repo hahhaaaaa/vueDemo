@@ -8,6 +8,7 @@
     style="marginTop:30px; width:600px;"
   >
     <el-form-item label="选择店铺" prop="store">
+     
       <el-select v-model="ruleForm.store" placeholder="请选择要添加的店铺">
         <el-option
           v-for="item in liebiao"
@@ -432,6 +433,7 @@ export default {
     const fm = JSON.parse(localStorage.user)[0]._id;
     this.getSerByPage({userID: fm});
     this.getfindPetAsync({ userID: fm });
+ 
   },
   methods: {
     shishi() {},

@@ -31,7 +31,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="warning" @click="handleCancel" class="el-button">取消</el-button>
+          <el-button type="warning" @click="handleCancel" class="el-button" style="margin-right:10px">取消</el-button>
           <el-button type="warning" @click="login" :loading="loading" class="el-button">登录</el-button>
         </el-form-item>
       </el-form>
@@ -214,7 +214,7 @@ export default {
            
             if (data.msg) {
               localStorage.setItem("user",JSON.stringify(data.data));
-              this.getUserInfo(data.data);
+              // this.getUserInfo(data.data);
              // console.log(this.$store.state)
               this.$message({
                 message: "登陆成功",
@@ -231,7 +231,7 @@ export default {
     },
 
     ...mapActions(["loginAsync"]),
-    ...mapMutations(['getUserInfo']),
+    // ...mapMutations(['getUserInfo']),
     handleCancel() {
       this.loading = false;
       this.$refs["form"].resetFields();

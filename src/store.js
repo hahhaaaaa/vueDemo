@@ -7,6 +7,7 @@ import shop from './store/shop'
 import Animals from './store/Animals'
 import commodity from './store/commodity'
 import service from './store/service'
+import chartMap from './store/chartMap'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -50,6 +51,7 @@ export default new Vuex.Store({
     shop,
     Animals,
     commodity,
-    service
+    service,
+    chartMap
   }
 })

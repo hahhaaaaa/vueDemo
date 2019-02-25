@@ -22,7 +22,12 @@
       </el-form>
     </div>
     <!-- 表格 -->
-    <el-table :data="rows" style="width: 100%">
+    <el-table 
+    :data="rows" 
+   
+    :row-class-name="tableRowClassName"
+ 
+    >
       <el-table-column type="expand">
         <template slot-scope="scope">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -151,7 +156,7 @@ export default {
       dialogVisible: false,
       address: "",
       selectTable: {
-        storeTitle: "",
+        storeTitle: "", 
         storeFeature:[],
         storePhone: "",
         storeAdress: "",
@@ -176,12 +181,23 @@ export default {
     };
   },
   methods: {
+    
     handleEdit(index, row) {
       this.dialogVisible = true;
       this.selectTable = row;
       console.log(this.selectTable,'123213')
       //   console.log(index, row);
     },
+    tableRowClassName({row, rowIndex}) {
+      
+    
+        if (row.state =='0') {
+          // console.log(true)
+          return 'warning-row';
+        }
+        return '';
+          
+      },
     handleDelete(index, row) {
       console.log(index, row);
       this.getShopDelete({ _id: row._id });
@@ -288,9 +304,20 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
+
 .search {
   margin-top: 20px;
 }
+ /* .el-table .warning-row {
+    background: oldlace;
+} */
+/* .el-table__row .warning-row{
+  background: rebeccapurple
+} */
+.el-table__row.warning-row {
+   background: #f0f9eb;
+}
 </style>
+
 

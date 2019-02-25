@@ -14,7 +14,7 @@
     <div class="right-menu">
       <el-dropdown class="picUrl-container right-menu-item" trigger="click">
         <div class="picUrl-wrapper">
-          <span>{{name}}</span>
+          <span>{{userName}}</span>
           <img class="user-picUrl" :src="picUrl">
           <i class="el-icon-caret-bottom"></i>
         </div>
@@ -47,7 +47,7 @@ import Hamburger from '@/components/Hamburger'
 // import ErrorLog from '@/components/ErrorLog'
 // import Screenfull from '@/components/Screenfull'
 // import LangSelect from '@/components/LangSelect'
-
+import moment from 'moment'
  import { mapGetters,createNamespacedHelpers } from "vuex";
  let { mapMutations, mapState, mapActions } = createNamespacedHelpers("user");
 export default {
@@ -60,7 +60,8 @@ export default {
   },
   data(){
     return{
-      
+        userName:'',
+        picUrl:''
     }
     // return{
     //    isCollapse: true
@@ -73,16 +74,39 @@ export default {
     //   // 'picUrl'
     // ])
   },
-  computed:{
-    ...mapState(['picUrl','name'])
+  // computed:{
+  //   ...mapState(['picUrl','name'])
+  // },
+  mounted(){
+    this.isLoginAsync().then(({data})=>{
+      //  console.log(data.isLogin)
+       if(data.isLogin){
+         this.userName=data.result[0].userName
+         this.picUrl=data.result[0].picUrl
+       }else{
+         this.$router.push('/login');
+         localStorage.removeItem('router')
+         localStorage.removeItem('user');
+         
+       }
+    } 
+    ).catch((err)=>{
+       this.$router.push('/login');
+        localStorage.removeItem('router')
+         localStorage.removeItem('user');
+        
+    })
   },
   methods: {
-      
+      ...mapActions(['isLoginAsync','logOut']),
    
     
     logout() {
-      logout().then(()=>{
-        
+        this.logOut().then(()=>{
+          localStorage.setItem('admin',moment().format("YYYY-MM-DD HH:mm:ss"))
+         localStorage.removeItem('user');
+         localStorage.removeItem('router')
+          this.$router.push('/login');
       })
       // LogOut().then(()=>{
 

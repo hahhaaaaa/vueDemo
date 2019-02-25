@@ -5,6 +5,7 @@
         shadow="never"
         class="form-container"
         style="margin:20px auto;border:1px solid #81cba2b0;"
+
       >
         <el-row>
           <el-col :span="18" :offset="2">
@@ -263,14 +264,15 @@ export default {
   },
   methods: {
     addMarker: function() {
-      let lng = 121.5 + Math.round(Math.random() * 1000) / 100;
-      let lat = 31.197646 + Math.round(Math.random() * 500) / 100;
+      let lng = 104.06 + Math.round(Math.random() * 1000) / 100;
+      let lat = 30.67 + Math.round(Math.random() * 500) / 100;
       this.markers.push([lng, lat]);
       //this.formData.storePosition=
     },
     onSearchResult(pois) {
-      this.formData.storeAddress = pois[0].name;
-      this.storePosition=[pois[0].lat,pois[0]]
+      this.formData.storeAddress = pois[0].address;
+      this.formData.storePosition=[pois[0].lng,pois[0].lat]
+      console.log(this.formData)
       let latSum = 0;
       let lngSum = 0;
       if (pois.length > 0) {
@@ -340,6 +342,7 @@ export default {
     // getQiniuToken() {},
     submitForm(formData) {
       formData.userID= JSON.parse(localStorage.getItem("user"))[0]._id,
+      console.log(formData.userID)
       this.storeAdd(formData).then(({ data }) => {
         console.log(data);
         this.$router.push("/example/tree");

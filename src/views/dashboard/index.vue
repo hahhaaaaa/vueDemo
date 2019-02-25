@@ -3,11 +3,11 @@
     <el-row style="margin-top:20px;margin-bottom:20px">
       <div class="weinfo">
         <span><img src="../../assets/sun.png"/></span>
-        <b>Admin,欢迎XXX使用后台管理</b>
+        <b>Admin,欢迎{{name}}使用后台管理</b>
       </div>
       <div class="weinfo">
         <span><img src="../../assets/time.png">
-          <i>您上次登录时间xx-xx</i>
+          <i>您上次登录时间{{time}}</i>
         </span>
       </div>
     </el-row>
@@ -26,18 +26,29 @@
 
 <script>
 import echarts from 'echarts'
+ import { mapGetters,createNamespacedHelpers, Store } from "vuex";
+ let { mapMutations, mapState, mapActions } = createNamespacedHelpers("commodity");
 export default {
   data() {
     return {
       chartColumb:null,
       charBar:null,
       chartLine:null,
-      chartPie:null
+      chartPie:null,
+      name:'',
+      time:'',
+      food:null,
+      clean:null,
+      rests:null
     };
   },
   filters: {},
-  created() {},
+  created() {
+    this.time=localStorage.getItem('admin')
+  },
+ 
   methods: {
+       ...mapActions(['getKindAsync']),
         drawLineChart() {
                 this.chartLine = echarts.init(document.getElementById('chartLine'));
                 this.chartLine.setOption({
@@ -79,8 +90,8 @@ export default {
                 this.chartPie = echarts.init(document.getElementById('chartPie'));
                 this.chartPie.setOption({
                     title: {
-                        text: '热度排行榜',
-                        subtext: '截止2018-10-10',
+                        text: '商品分类',
+                        subtext: '截止2019-2-25',
                         x: 'center'
                     },
                     tooltip: {
@@ -90,7 +101,7 @@ export default {
                     legend: {
                         orient: 'vertical',
                         left: 'left',
-                        data: ['上海教育', '成长发育', '才艺启蒙', '科学育儿', '各地要闻']
+                        data: ['食品类', '洗浴类', '其他类']
                     },
                     series: [
                         {
@@ -99,11 +110,11 @@ export default {
                             radius: '55%',
                             center: ['50%', '60%'],
                             data: [
-                                {value: 335, name: '上海教育'},
-                                {value: 310, name: '成长发育'},
-                                {value: 234, name: '才艺启蒙'},
-                                {value: 135, name: '科学育儿'},
-                                {value: 1548, name: '各地要闻'}
+                                {value:this.food, name: '食品类'},
+                                {value: this.clean, name: '洗浴类'},
+                                // {value: 234, name: '才艺启蒙'},
+                                // {value: 135, name: '科学育儿'},
+                                {value: this.rests, name: '其他类'}
                             ],
                             itemStyle: {
                                 emphasis: {
@@ -114,7 +125,7 @@ export default {
                             }
                         }
                     ],
-                    color:['#72bff3','#33ff2e', '#44ff5c', '#31cbff','#ff8687','#33332e','#72a0ff']
+                    color:['#72bff3','#33ff2e','#ff8687','#31cbff','#33332e','#72a0ff', '#44ff5c', ]
                 });
             },
              drawCharts() {
@@ -125,11 +136,27 @@ export default {
   },
 
   mounted(){
-    this.drawCharts()
+   
+    this.name=JSON.parse(localStorage.getItem('user'))[0].userName
+    this.getKindAsync().then(({data})=>{
+     this.rests=data.rests,
+     this.clean=data.clean,
+     this.food=data.food
+      // console.log(this.food,this.clean,this.rests)
+        this.drawCharts()
+    })
+    // console.log(this.food,this.clean,this.rests)
+    
+    
+    // console.log(this.food)
+    
   },
   updated(){
     this.drawCharts()
-  }
+  },
+  computed:{
+    // ...mapState(['picUrl','name'])
+  },
 };
 </script>
 <style scoped>

@@ -13,6 +13,7 @@ export default {//创建仓库
     mutations: {//同步更新
         getSerByPage:(state,payload)=>{
             Object.assign(state,payload);//payload不能直接覆盖掉state，
+            console.log(state,'123')
             // 会将代理都覆盖掉 Object.assign(state,payload)，
             // 内部是for(let item in 对象)遍历，等同于state.data=payload.data
         },
@@ -36,7 +37,7 @@ export default {//创建仓库
                 eachPage:state.eachPage,
                 userID:state.userID
             });
-            console.log(data)
+            console.log(data,"321")
             commit('getSerByPage',data)
         },
         getdeleteAsync:async ({commit,dispatch},payload)=>{
@@ -51,6 +52,7 @@ export default {//创建仓库
         },
         getfindPetAsync:async ({commit,state},payload)=>{  
             const {data}=await getfindPetAsync(payload);
+            console.log(data)
             commit('getSerByPage',data);
         },
     }

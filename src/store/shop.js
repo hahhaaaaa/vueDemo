@@ -1,4 +1,4 @@
-import {getShopsBypage,getShopAddress,getShopDelete,getPhoto,getAllSearch,getToken,storeAdd,updateAsync} from  '../service/shop'
+import {getShopsBypage,getShopAddress,getShopDelete,getPhoto,getAllSearch,getToken,storeAdd,updateAsync,storeNoListAsync,IsUpdate} from  '../service/shop'
 import { async } from 'q';
 
 export default {
@@ -23,6 +23,7 @@ export default {
             name = name || ''
             value = value || ''
             let userID=JSON.parse(localStorage.getItem('user'))[0]._id
+            // console.log(userID)
             let { data } = await getShopsBypage({ start: state.start, count: state.count, name, value,userID });
             commit("getShopList", data);
         },
@@ -43,7 +44,7 @@ export default {
 
         },
         getAllSearch: async ({ state }, { name, value }) => {
-            let data = await getAllSearch({ start: 1, coutn: state.count, name, value });
+            let data = await getAllSearch({ start: 1, count: state.count, name, value });
             // console.log(data)
         },
         getToken: async ({ state }, payload) => {
@@ -58,8 +59,21 @@ export default {
         },
         updateAsync:async ({dispatch},payload)=>{
             return updateAsync(payload)
+        },
+        storeNoListAsync:async({state,dispatch,commit},payload)=>{
+            // console.log('123')
+          let {data}= await storeNoListAsync({ start: state.start, count: state.count });
+           //console.log(data)
+            commit("getShopList", data);
+           
+        },
+        IsUpdate:async({commit},payload)=>{
+            await IsUpdate(payload)
+            dispatch('storeNoListAsync')
         }
-
+        // weather:async()=>{
+        //     return weather()
+        // }
     },
 
 
