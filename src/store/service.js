@@ -1,4 +1,5 @@
-import {getSerByPageAsync,upDateServiceAsnync,addServiceAsync,delOneSerAsync} from '../service/service';
+import {getSerByPageAsync,upDateServiceAsnync,addServiceAsync,delOneSerAsync,getstoreAsync} from '../service/service';
+
 export default {//创建仓库
     namespaced:true,
     state: {
@@ -6,6 +7,7 @@ export default {//创建仓库
         eachPage:5,//每页显示条数
         totalPage:1,//总页数
         count:0,//总条数
+        liebiao:[],//门店
         rows:[]//数据
     },
     mutations: {//同步更新
@@ -24,6 +26,10 @@ export default {//创建仓库
     getters:{
     },
     actions: { //连接后台接口backend api
+        getstore:async ({commit,state},payload)=>{//获取关联门店
+            const{data}=await getstoreAsync({payload})
+            commit('getSerByPage',data)
+        },
         getSerByPageAsync:async ({commit,state})=>{
            const{data} =await getSerByPageAsync({
                 currentPage:state.currentPage,
@@ -31,11 +37,6 @@ export default {//创建仓库
             });
            commit('getSerByPage',data)
         },
-        // setCurPageTrans:async({commit,dispatch},payload)=>{
-        //     commit('setCurPage',payload);
-        //     dispatch('getStuByPageAsync');
-        // }
-
         upDateServiceAsnync:async ({commit},payload)=>{
             const {data}=await upDateServiceAsnync(payload);
             commit('getSerByPage',data)
